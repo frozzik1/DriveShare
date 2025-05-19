@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCatalogCards();
   initCarPage();
   initCatalogRedirect();
+  initIndexSearch();
 });
 
 // 🍔 Меню-бургер
@@ -40,7 +41,68 @@ function initIntersectionAnimations() {
   observe(".caring__item", "visible", 0.5, true);
   observe(".tarifs__tarif-card");
 }
+// 🚀 Поиск на index.html
+function initIndexSearch() {
+  const searchForm = document.querySelector('.header__form-search');
+  if (!searchForm) return;
 
+  const searchInput = searchForm.querySelector('input[type="text"]');
+  const autocompleteList = searchForm.querySelector('.autocomplete-list');
+  if (!searchInput || !autocompleteList) return;
+
+  let allCars = [];
+
+  fetch('js/cars.json')
+    .then(res => res.json())
+    .then(data => {
+      allCars = data.carts;
+    })
+    .catch(err => console.error("Помилка завантаження JSON:", err));
+
+  function showAutocomplete(query) {
+    autocompleteList.innerHTML = '';
+    if (!query) return;
+
+    const matches = allCars
+      .filter(car => car.title.toLowerCase().includes(query))
+      .slice(0, 5);
+
+    matches.forEach(car => {
+      const item = document.createElement('li');
+      item.textContent = car.title;
+      item.addEventListener('click', () => {
+        searchInput.value = car.title;
+        autocompleteList.innerHTML = '';
+        // Переходим на каталог с поисковым параметром
+        const url = new URL(window.location.origin + '/catalog.html');
+        url.searchParams.set('search', car.title.toLowerCase());
+        window.location.href = url.toString();
+      });
+      autocompleteList.appendChild(item);
+    });
+  }
+
+  searchInput.addEventListener('input', () => {
+    showAutocomplete(searchInput.value.trim().toLowerCase());
+  });
+
+  searchForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) return;
+
+    // При сабмите сразу переходим на каталог с поисковым параметром
+    const url = new URL(window.location.origin + '/catalog.html');
+    url.searchParams.set('search', query);
+    window.location.href = url.toString();
+  });
+
+  document.addEventListener('click', e => {
+    if (!searchForm.contains(e.target)) {
+      autocompleteList.innerHTML = '';
+    }
+  });
+}
 // 🚘 Генерація карток авто (каталог)
 function initCatalogCards() {
   const container = document.getElementById('portfolio__card');

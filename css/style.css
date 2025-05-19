@@ -204,6 +204,28 @@ $breakpoint_m:480px;
   max-width: 540px;
 }
 
+
+.autocomplete-list {
+  position: absolute;
+  background: #008892;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.autocomplete-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+  background: #ffffff83;
+}
+
+
 .header input {
   width: 400px;
   height: 55px;
