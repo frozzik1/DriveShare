@@ -2,6 +2,7 @@
   "data": [
     {
       "title": "Nissan Leaf",
+      "slug": "nissan-leaf",
       "subtitle": "Електромобіль майбутнього – нульовий викид, максимальний комфорт",
       "image": "images/cars/leaf.png",
       "price": "3000",
@@ -22,6 +23,7 @@
     },
     {
       "title": "Hyundai Solaris",
+      "slug": "hyundai-solaris",
       "subtitle": "Економний комфорт – компактний седан для щоденних поїздок",
       "image": "images/cars/solaris.png",
       "price": "3000",

@@ -370,10 +370,12 @@ body::-webkit-scrollbar-thumb {
 .portfolio__card img {
     border-radius: 10px;
     width: 100%;
+    object-fit: contain;
 }
 
 .card__bg{
     max-width: 450px;
+    object-fit: contain;
 }
 
 .car__advantages, .car__description{

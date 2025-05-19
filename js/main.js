@@ -282,7 +282,6 @@ function initCatalogCards() {
   });
 
 }
-
 // 📄 Сторінка car.html
 function initCarPage() {
   const carTitle = document.getElementById("car-title");
@@ -294,7 +293,11 @@ function initCarPage() {
   fetch("js/cars.json")
     .then(res => res.json())
     .then(data => {
-      const carData = data.data.find(car =>
+      // Используем data.data для страницы car.html
+      const allCars = data.data || [];
+
+      // Ищем машину по slug (а не по title)
+      const carData = allCars.find(car =>
         car.title.toLowerCase().replace(/\s+/g, '-') === model.toLowerCase()
       );
 
@@ -305,26 +308,86 @@ function initCarPage() {
 
       document.title = `${carData.title} – DriveShare`;
       carTitle.textContent = carData.title;
-      document.getElementById("car-subtitle").textContent = carData.subtitle;
-      const img = document.getElementById("car-image");
-      img.src = carData.image;
-      img.alt = carData.title;
-      document.getElementById("car-price").textContent = `${carData.price} ₴/доба`;
 
-      renderList("car-features", carData.car_features);
-      renderList("rental_cost", carData.rental_cost);
+      // Добавляем проверку существования элементов
+      const subtitleEl = document.getElementById("car-subtitle");
+      if (subtitleEl) subtitleEl.textContent = carData.subtitle || "";
+
+      const img = document.getElementById("car-image");
+      if (img) {
+        img.src = carData.image || "";
+        img.alt = carData.title || "";
+      }
+
+      const priceEl = document.getElementById("car-price");
+      if (priceEl) priceEl.textContent = `${carData.price} ₴/доба`;
+
+      // Исправленная функция renderList
+      function renderList(id, data) {
+        const container = document.getElementById(id);
+        if (!container || !data) {
+          console.error(`Контейнер ${id} не найден или нет данных`);
+          return;
+        }
+
+        container.innerHTML = Object.entries(data)
+          .map(([key, val]) => `<li><strong>${key}:</strong> ${val}</li>`)
+          .join('');
+      }
+
+      // Добавляем характеристики
+      if (carData.car_features) {
+        renderList("car-features", carData.car_features);
+      } else {
+        console.error("Нет данных car_features");
+      }
+
+      // Добавляем стоимость аренды
+      if (carData.rental_cost) {
+        renderList("rental_cost", carData.rental_cost);
+      } else {
+        console.error("Нет данных rental_cost");
+      }
+
+      // Рекомендованные авто (используем data.carts)
+      const recommendedCars = data.carts || [];
+      renderRecommendedCars(recommendedCars, model.toLowerCase());
     })
     .catch(err => {
       console.error("Помилка завантаження car data:", err);
       document.body.innerHTML = "<h2>Сталася помилка при завантаженні даних</h2>";
     });
 
-  function renderList(id, data) {
-    const container = document.getElementById(id);
+  function renderRecommendedCars(allCars, currentSlug) {
+    const container = document.getElementById('portfolio__card');
     if (!container) return;
-    container.innerHTML = Object.entries(data)
-      .map(([key, val]) => `<li>${key}: ${val}</li>`)
-      .join('');
+
+    // Фильтруем авто (исключаем текущее)
+    const recommended = allCars
+      .filter(car => car.slug !== currentSlug)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
+
+    container.innerHTML = '';
+
+    recommended.forEach(car => {
+      const card = document.createElement('div');
+      card.className = 'portfolio__card';
+      card.innerHTML = `
+        <img class="card__bg" src="${car.image}" alt="${car.title}">
+        <div class="card__title">
+          <p class="car__advantages">${car.subtitle}</p>
+          <p class="car__model">${car.title}</p>
+          <p class="car__description">${car.description}</p>
+        </div>
+        <div class="card__select">
+          <p class="car__price">${car.price}</p>
+          <button class="card__btn">
+            <a href="car.html?model=${encodeURIComponent(car.slug)}">Обрати</a>
+          </button>
+        </div>`;
+      container.appendChild(card);
+    });
   }
 }
 
