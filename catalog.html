@@ -43,14 +43,16 @@
                 <form class="header__form-search form">
                     <input type="text" placeholder="Знайти авто">
                     <button type="submit">Знайти</button>
+                    <ul class="autocomplete-list"></ul>
                 </form>
             </div>
             <div class="custom-select-wrapper">
-                <select class="custom-select">
-                    <option disabled selected>Фільтр</option>
-                    <option value="option1">Опція 1</option>
-                    <option value="option2">Опція 2</option>
-                    <option value="option3">Опція 3</option>
+                <select class="custom-select" id="classFilter">
+                    <option disabled selected>Оберіть клас авто</option>
+                    <option value="Усі">Усі</option>
+                    <option value="Економ">Економ</option>
+                    <option value="Середній">Середній</option>
+                    <option value="Бізнес">Бізнес</option>
                 </select>
             </div>
         </div>
@@ -59,116 +61,8 @@
         <section class="carts" id="carts">
             <div class="container">
                 <h2 class="carts__title">Всього авто</h2>
-                <div class="portfolio__cards">
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/solaris.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Економний комфорт</p>
-                            <p class="car__model">Hyundai Solaris</p>
-                            <p class="car__description">Компактний седан для щоденних поїздок</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">3000 ₴/добу</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/rio.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Стиль та ефективність</p>
-                            <p class="car__model">Kia Rio</p>
-                            <p class="car__description">Низька вартість, висока маневреність</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">6 ₴/хв</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/polo.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Німецька надійність</p>
-                            <p class="car__model">Volkswagen Polo</p>
-                            <p class="car__description">Компактний, але зручний для подорожей</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">350 ₴/3 год</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/corolla.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Безкомпромісний вибір</p>
-                            <p class="car__model">Toyota Corolla</p>
-                            <p class="car__description">Тихий двигун, екологічний стандарт</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">350 ₴/3 год</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/logan.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Просторий сімейний</p>
-                            <p class="car__model">Renault Logan</p>
-                            <p class="car__description">Великий багажник, міцна підвіска</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">350 ₴/3 год</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/leaf.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Електромобіль майбутнього</p>
-                            <p class="car__model">Nissan Leaf</p>
-                            <p class="car__description">Нульовий викид, тиха їзда</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">3000 ₴/добу</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/octavia.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Для довгих відстаней</p>
-                            <p class="car__model">Skoda Octavia</p>
-                            <p class="car__description">Зручний салон, стабільна швидкість</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">3000 ₴/добу</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/spark.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Мінімум витрат</p>
-                            <p class="car__model">Chevrolet Spark</p>
-                            <p class="car__description">Стильний та економний варіант</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">6 ₴/хв</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                    <div class="portfolio__card">
-                        <img class="card__bg" src="images/cars/focus.png" alt="">
-                        <div class="card__title">
-                            <p class="car__advantages">Динаміка та контроль</p>
-                            <p class="car__model">Ford Focus</p>
-                            <p class="car__description">Ідеальний для активних водіїв</p>
-                        </div>
-                        <div class="card__select">
-                            <p class="car__price">3000 ₴/добу</p>
-                            <button class="card__btn"><a href="car.html?model=nissan-leaf">Обрати</a></button>
-                        </div>
-                    </div>
-                </div>
+                <div class="portfolio__cards" id="portfolio__card"></div>
+                <div class="pagination" id="pagination"></div>
         </section>
     </main>
     <script src="js/main.js"></script>

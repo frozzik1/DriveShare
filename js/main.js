@@ -1,101 +1,273 @@
 document.addEventListener("DOMContentLoaded", () => {
+  initBurgerMenu();
+  initIntersectionAnimations();
+  initCatalogCards();
+  initCarPage();
+  initCatalogRedirect();
+});
+
+// 🍔 Меню-бургер
+function initBurgerMenu() {
   const burger = document.getElementById("burger");
   const navWrapper = document.getElementById("nav-wrapper");
+  if (!burger || !navWrapper) return;
 
-  if (burger && navWrapper) {
-    burger.addEventListener("click", () => {
-      navWrapper.classList.toggle("active");
-    });
+  burger.addEventListener("click", () => navWrapper.classList.toggle("active"));
+  document.querySelectorAll(".header__navigation-item a")
+    .forEach(link => link.addEventListener("click", () => navWrapper.classList.remove("active")));
+}
 
-    document.querySelectorAll(".header__navigation-item a").forEach(link => {
-      link.addEventListener("click", () => {
-        navWrapper.classList.remove("active");
-      });
-    });
-  }
-
-  const observeVisibility = (selector, visibleClass = "visible", threshold = 0.3, withDelay = false) => {
+// 👀 Анімації при скролі
+function initIntersectionAnimations() {
+  const observe = (selector, visibleClass = "visible", threshold = 0.3, withDelay = false) => {
     const elements = document.querySelectorAll(selector);
+    if (!elements.length) return;
 
-    if (elements.length) {
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(visibleClass);
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          if (withDelay) entry.target.style.animationDelay = `${idx * 0.3}s`;
+          entry.target.classList.add(visibleClass);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold });
 
-            if (withDelay) {
-              entry.target.style.animationDelay = `${index * 0.3}s`;
-            }
-
-            obs.unobserve(entry.target);
-          }
-        });
-      }, { threshold });
-
-      elements.forEach(el => observer.observe(el));
-    }
+    elements.forEach(el => observer.observe(el));
   };
 
-  observeVisibility(".advantages__item");
-  observeVisibility(".caring__item", "visible", 0.5, true);
-  observeVisibility(".tarifs__tarif-card");
+  observe(".advantages__item");
+  observe(".caring__item", "visible", 0.5, true);
+  observe(".tarifs__tarif-card");
+}
 
-  const catalogBtn = document.querySelector(".catalog__btn");
-  if (catalogBtn) {
-    catalogBtn.addEventListener("click", () => {
-      window.location.href = "catalog.html";
+// 🚘 Генерація карток авто (каталог)
+function initCatalogCards() {
+  const container = document.getElementById('portfolio__card');
+  const pagination = document.getElementById('pagination');
+  const searchForm = document.querySelector('.header__form-search');
+  const searchInput = searchForm?.querySelector('input[type="text"]');
+  const autocompleteList = searchForm?.querySelector('.autocomplete-list');
+  const classFilter = document.getElementById("classFilter"); // ← важливо
+
+  if (!container || !pagination || !searchForm || !searchInput || !autocompleteList) return;
+
+  const CARDS_PER_PAGE = 9;
+  let allCars = [], filteredCars = [], currentPage = 1, currentQuery = '';
+  let selectedClass = 'Усі';
+
+  const urlParams = new URLSearchParams(window.location.search);
+  currentPage = Math.max(1, parseInt(urlParams.get('page')) || 1);
+  currentQuery = urlParams.get('search')?.toLowerCase().trim() || '';
+  if (currentQuery) searchInput.value = currentQuery;
+  selectedClass = urlParams.get('class') || 'Усі';
+  if (classFilter) classFilter.value = selectedClass;
+
+  fetch('js/cars.json')
+    .then(res => res.json())
+    .then(data => {
+      allCars = data.carts;
+      applySearch(currentQuery);
+      renderPage(currentPage);
+      renderPagination(currentPage);
+    })
+    .catch(err => console.error("Помилка завантаження JSON:", err));
+
+  function showAutocomplete(query) {
+    autocompleteList.innerHTML = '';
+    if (!query) return;
+
+    allCars
+      .filter(car => car.title.toLowerCase().includes(query))
+      .slice(0, 5)
+      .forEach(car => {
+        const item = document.createElement('li');
+        item.textContent = car.title;
+        item.addEventListener('click', () => {
+          searchInput.value = car.title;
+          autocompleteList.innerHTML = '';
+          searchForm.dispatchEvent(new Event('submit'));
+        });
+        autocompleteList.appendChild(item);
+      });
+  }
+
+  searchInput.addEventListener('input', () => showAutocomplete(searchInput.value.trim().toLowerCase()));
+
+  document.addEventListener('click', e => {
+    if (!searchForm.contains(e.target)) autocompleteList.innerHTML = '';
+  });
+
+  function applySearch(query) {
+    let result = allCars;
+
+    if (query) {
+      result = result.filter(car => car.title.toLowerCase().includes(query));
+    }
+
+    if (selectedClass !== 'Усі') {
+      result = result.filter(car =>
+        car.car_class && car.car_class.toLowerCase() === selectedClass.toLowerCase()
+      );
+    }
+
+    filteredCars = result;
+  }
+
+  function renderPage(page) {
+    container.innerHTML = '';
+    const start = (page - 1) * CARDS_PER_PAGE;
+    const pageCars = filteredCars.slice(start, start + CARDS_PER_PAGE);
+
+    if (!pageCars.length) {
+      container.innerHTML = '<p>Авто не знайдено.</p>';
+      pagination.innerHTML = '';
+      return;
+    }
+
+    pageCars.forEach(car => {
+      const card = document.createElement('div');
+      card.className = 'portfolio__card';
+      card.innerHTML = `
+        <img class="card__bg" src="${car.image}" alt="${car.title}">
+        <div class="card__title">
+          <p class="car__advantages">${car.subtitle}</p>
+          <p class="car__model">${car.title}</p>
+          <p class="car__description">${car.description}</p>
+        </div>
+        <div class="card__select">
+          <p class="car__price">${car.price}</p>
+          <button class="card__btn">
+            <a href="car.html?model=${encodeURIComponent(car.slug)}">Обрати</a>
+          </button>
+        </div>`;
+      container.appendChild(card);
     });
   }
 
-  // 📦 Додавання логіки для car.html
-  const carTitle = document.getElementById("car-title");
-  if (carTitle) {
-    const params = new URLSearchParams(window.location.search);
-    const model = params.get("model");
+  function renderPagination(activePage) {
+    const pageCount = Math.ceil(filteredCars.length / CARDS_PER_PAGE);
+    pagination.innerHTML = '';
 
-    fetch("js/cars.json")
-      .then(response => response.json())
-      .then(data => {
-        // Підключення до нового формату JSON
-        const carData = data.data.find(car => car.title.toLowerCase().replace(/\s+/g, '-') === model.toLowerCase());
-
-        if (carData) {
-          document.title = carData.title + " – DriveShare";
-          carTitle.textContent = carData.title;
-          document.getElementById("car-subtitle").textContent = carData.subtitle;
-
-          // Добавляем характеристики машины в список
-          const featuresList = document.getElementById("car-features");
-          featuresList.innerHTML = '';
-
-          // Добавляем характеристики
-          for (const feature in carData.car_features) {
-            const listItem = document.createElement("li");
-            listItem.textContent = `${feature}: ${carData.car_features[feature]}`;
-            featuresList.appendChild(listItem);
-          }
-
-          // Добавляем цены аренды в отдельный список
-          const rentalList = document.getElementById("rental_cost");
-          rentalList.innerHTML = ''; // очищаем список, если нужно
-
-          for (const rental in carData.rental_cost) {
-            const listItem = document.createElement("li");
-            listItem.textContent = `${rental}: ${carData.rental_cost[rental]}`;
-            rentalList.appendChild(listItem);
-          }
-
-          const image = document.getElementById("car-image");
-          image.src = carData.image;
-          image.alt = carData.title;
-          document.getElementById("car-price").textContent = carData.price + " ₴/доба";
-        } else {
-          document.body.innerHTML = "<h2>Автомобіль не знайдено</h2>";
-        }
-      })
-      .catch(err => {
-        console.error("Помилка завантаження car data:", err);
-        document.body.innerHTML = "<h2>Сталася помилка при завантаженні даних</h2>";
+    for (let i = 1; i <= pageCount; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.className = 'pagination-btn' + (i === activePage ? ' active' : '');
+      btn.addEventListener('click', () => {
+        currentPage = i;
+        renderPage(currentPage);
+        renderPagination(currentPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        updateURL();
       });
+      pagination.appendChild(btn);
+    }
   }
-});
+
+  function updateURL() {
+    const url = new URL(window.location);
+    url.searchParams.set('page', currentPage);
+    if (currentQuery) {
+      url.searchParams.set('search', currentQuery);
+    } else {
+      url.searchParams.delete('search');
+    }
+    if (selectedClass && selectedClass !== 'Усі') {
+      url.searchParams.set('class', selectedClass);
+    } else {
+      url.searchParams.delete('class');
+    }
+    window.history.pushState({}, '', url);
+  }
+
+
+  searchForm.addEventListener('submit', e => {
+    e.preventDefault();
+    currentQuery = searchInput.value.trim().toLowerCase();
+    currentPage = 1;
+
+    applySearch(currentQuery);
+    renderPage(currentPage);
+    renderPagination(currentPage);
+    updateURL();
+  });
+
+  if (classFilter) {
+    classFilter.addEventListener("change", () => {
+      selectedClass = classFilter.value;
+      currentPage = 1;
+
+      applySearch(currentQuery);
+      renderPage(currentPage);
+      renderPagination(currentPage);
+      updateURL();
+    });
+  }
+  window.addEventListener('popstate', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    currentPage = Math.max(1, parseInt(urlParams.get('page')) || 1);
+    currentQuery = urlParams.get('search')?.toLowerCase().trim() || '';
+    selectedClass = urlParams.get('class') || 'Усі';
+
+    if (searchInput) searchInput.value = currentQuery;
+    if (classFilter) classFilter.value = selectedClass;
+
+    applySearch(currentQuery);
+    renderPage(currentPage);
+    renderPagination(currentPage);
+  });
+
+}
+
+// 📄 Сторінка car.html
+function initCarPage() {
+  const carTitle = document.getElementById("car-title");
+  if (!carTitle) return;
+
+  const model = new URLSearchParams(window.location.search).get("model");
+  if (!model) return;
+
+  fetch("js/cars.json")
+    .then(res => res.json())
+    .then(data => {
+      const carData = data.data.find(car =>
+        car.title.toLowerCase().replace(/\s+/g, '-') === model.toLowerCase()
+      );
+
+      if (!carData) {
+        document.body.innerHTML = "<h2>Автомобіль не знайдено</h2>";
+        return;
+      }
+
+      document.title = `${carData.title} – DriveShare`;
+      carTitle.textContent = carData.title;
+      document.getElementById("car-subtitle").textContent = carData.subtitle;
+      const img = document.getElementById("car-image");
+      img.src = carData.image;
+      img.alt = carData.title;
+      document.getElementById("car-price").textContent = `${carData.price} ₴/доба`;
+
+      renderList("car-features", carData.car_features);
+      renderList("rental_cost", carData.rental_cost);
+    })
+    .catch(err => {
+      console.error("Помилка завантаження car data:", err);
+      document.body.innerHTML = "<h2>Сталася помилка при завантаженні даних</h2>";
+    });
+
+  function renderList(id, data) {
+    const container = document.getElementById(id);
+    if (!container) return;
+    container.innerHTML = Object.entries(data)
+      .map(([key, val]) => `<li>${key}: ${val}</li>`)
+      .join('');
+  }
+}
+
+// 🔗 Перехід з кнопки на сторінку каталогу
+function initCatalogRedirect() {
+  document.querySelector(".catalog__btn")?.addEventListener("click", () => {
+    window.location.href = "catalog.html";
+  });
+}
+

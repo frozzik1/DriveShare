@@ -137,6 +137,28 @@ body::-webkit-scrollbar-thumb {
     gap: 20px;
     width: 100%;
     margin-bottom: 25px;
+
+}
+
+.autocomplete-list {
+  position: absolute;
+  background: #008892;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.autocomplete-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+  background: #ffffff83;
 }
 
 .header input {
@@ -164,12 +186,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .header input:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: #00889283;
     color: white;
 }
 
 .header input:focus {
-    background: rgba(0, 0, 0, 0.5);
+    background: #00889283;
     color: white;
     transition: 1s all;
 }
@@ -317,6 +339,7 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
+
 .carts__title {
     color: #000000;
     font-family: "Roboto", sans-serif;
@@ -336,6 +359,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     justify-content: space-around;
     gap: 30px;
+    
 }
 
 .portfolio__card {
@@ -346,6 +370,7 @@ body::-webkit-scrollbar-thumb {
 
 .portfolio__card img {
     border-radius: 10px;
+    width: 100%;
 }
 
 .card__bg{
@@ -387,6 +412,28 @@ body::-webkit-scrollbar-thumb {
     font-size: 20px;
     font-weight: 300;
 }
+
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pagination-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #000000;
+}
+
+.pagination-btn.active {
+  background-color: #008892;
+  color: #fff;
+}
+
+
 @media (max-width: 480px) {
     .portfolio__card {
         padding: 15px;
