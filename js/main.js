@@ -49,7 +49,7 @@ function initIndexSearch() {
   const searchInput = searchForm.querySelector('input[type="text"]');
   const autocompleteList = searchForm.querySelector('.autocomplete-list');
   if (!searchInput || !autocompleteList) return;
-
+  const basePath = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/') + '/';
   let allCars = [];
 
   fetch('js/cars.json')
@@ -74,7 +74,7 @@ function initIndexSearch() {
         searchInput.value = car.title;
         autocompleteList.innerHTML = '';
         // Переходим на каталог с поисковым параметром
-        const url = new URL(window.location.origin + basePath + 'catalog.html');
+        const url = new URL(basePath + 'catalog.html');
         url.searchParams.set('search', car.title.toLowerCase());
         window.location.href = url.toString();
       });
@@ -92,7 +92,8 @@ function initIndexSearch() {
     if (!query) return;
     const basePath = window.location.pathname.replace(/\/[^\/]*$/, '/');
     // При сабмите сразу переходим на каталог с поисковым параметром
-    const url = new URL(window.location.origin + basePath + 'catalog.html');
+    const url = new URL(basePath + 'catalog.html');
+  
     url.searchParams.set('search', query);
     window.location.href = url.toString();
   });
@@ -107,7 +108,8 @@ function initIndexSearch() {
 function initCatalogCards() {
   const container = document.getElementById('portfolio__card');
   const pagination = document.getElementById('pagination');
-  const basePath = window.location.pathname.replace(/\/[^\/]*$/, '/');
+  const basePath = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/') + '/';
+  
   const searchForm = document.querySelector('.header__form-search');
   const searchInput = searchForm?.querySelector('input[type="text"]');
   const autocompleteList = searchForm?.querySelector('.autocomplete-list');
