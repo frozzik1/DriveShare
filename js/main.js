@@ -74,7 +74,7 @@ function initIndexSearch() {
         searchInput.value = car.title;
         autocompleteList.innerHTML = '';
         // Переходим на каталог с поисковым параметром
-        const url = new URL(window.location.origin + '/catalog.html');
+        const url = new URL(window.location.origin + basePath + 'catalog.html');
         url.searchParams.set('search', car.title.toLowerCase());
         window.location.href = url.toString();
       });
@@ -90,9 +90,9 @@ function initIndexSearch() {
     e.preventDefault();
     const query = searchInput.value.trim().toLowerCase();
     if (!query) return;
-
+    const basePath = window.location.pathname.replace(/\/[^\/]*$/, '/');
     // При сабмите сразу переходим на каталог с поисковым параметром
-    const url = new URL(window.location.origin + '/catalog.html');
+    const url = new URL(window.location.origin + basePath + 'catalog.html');
     url.searchParams.set('search', query);
     window.location.href = url.toString();
   });
@@ -107,11 +107,11 @@ function initIndexSearch() {
 function initCatalogCards() {
   const container = document.getElementById('portfolio__card');
   const pagination = document.getElementById('pagination');
+  const basePath = window.location.pathname.replace(/\/[^\/]*$/, '/');
   const searchForm = document.querySelector('.header__form-search');
   const searchInput = searchForm?.querySelector('input[type="text"]');
   const autocompleteList = searchForm?.querySelector('.autocomplete-list');
   const classFilter = document.getElementById("classFilter"); // ← важливо
-
   if (!container || !pagination || !searchForm || !searchInput || !autocompleteList) return;
 
   const CARDS_PER_PAGE = 9;
