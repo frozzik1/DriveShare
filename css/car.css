@@ -145,7 +145,7 @@ body::-webkit-scrollbar-thumb {
     padding: 8px 12px;
     background-color: #f0f0f0;
     border: none;
-    border-radius: 6px;
+    border-radius: 25px;
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
@@ -318,13 +318,6 @@ body::-webkit-scrollbar-thumb {
     padding-top: 5px;
 }
 
-
-.car__price {
-    font-size: 30px;
-    font-weight: 800;
-    margin: 20px auto;
-}
-
 .select__car-btn {
     width: 150px;
     height: 45px;
@@ -338,14 +331,14 @@ body::-webkit-scrollbar-thumb {
     background-repeat: no-repeat;
     background-position: center;
     transition: 0.3s all;
+    border-radius: 25px;
 }
 
 .select__car-btn:hover {
     box-shadow: 0px 0px 17px #008892;
 }
 
-
-.carts__title {
+.cart__title {
     color: #000000;
     font-family: "Roboto", sans-serif;
     font-weight: 800;
@@ -358,24 +351,29 @@ body::-webkit-scrollbar-thumb {
 }
 
 .portfolio__cards {
-    margin-top: 36px;
+    margin-top: 26px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
-    gap: 30px;
-
+    gap: 45px;
 }
 
 .portfolio__card {
     padding: 30px;
-    max-width: 450px;
-    border-radius: 10px;
+    width: 450px;
+    border: #008892 1px solid;
+    border-radius: 25px;
+    height: 510px;
+    box-shadow: 0px 0px 15px #000000;
+    margin-bottom: 30px;
 }
 
 .portfolio__card img {
     border-radius: 10px;
     width: 100%;
+    object-fit: contain;
+    height: 290px;
 }
 
 .card__bg {
@@ -406,9 +404,11 @@ body::-webkit-scrollbar-thumb {
 }
 
 .car__price {
-    font-size: 20px;
     color: #000000;
     font-family: "Roboto", sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    margin: 20px auto;
 }
 
 .card__btn {
@@ -418,4 +418,22 @@ body::-webkit-scrollbar-thumb {
     font-family: "Roboto", sans-serif;
     font-size: 20px;
     font-weight: 300;
+    border-radius: 25px;
+}
+
+.card__btn:hover{
+    box-shadow: 0px 0px 17px #008892;
+}
+
+.card__select {
+    margin-top: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.currcar__price{
+    color: #000000;
+    font-size: 22px;
+    font-family: "Roboto", sans-serif;
 }

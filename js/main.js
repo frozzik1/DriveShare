@@ -5,9 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initCarPage();
   initCatalogRedirect();
   initIndexSearch();
+  initTotalCarCount();
 });
 
-// 🍔 Меню-бургер
+// Меню-бургер
 function initBurgerMenu() {
   const burger = document.getElementById("burger");
   const navWrapper = document.getElementById("nav-wrapper");
@@ -18,7 +19,7 @@ function initBurgerMenu() {
     .forEach(link => link.addEventListener("click", () => navWrapper.classList.remove("active")));
 }
 
-// 👀 Анімації при скролі
+// Анімації при скролі
 function initIntersectionAnimations() {
   const observe = (selector, visibleClass = "visible", threshold = 0.3, withDelay = false) => {
     const elements = document.querySelectorAll(selector);
@@ -41,7 +42,7 @@ function initIntersectionAnimations() {
   observe(".caring__item", "visible", 0.5, true);
   observe(".tarifs__tarif-card");
 }
-// 🚀 Поиск на index.html
+// Пошук на index.html
 function initIndexSearch() {
   const searchForm = document.querySelector('.header__form-search');
   if (!searchForm) return;
@@ -104,7 +105,7 @@ function initIndexSearch() {
     }
   });
 }
-// 🚘 Генерація карток авто (каталог)
+// Генерація карток авто (каталог)
 function initCatalogCards() {
   const container = document.getElementById('portfolio__card');
   const pagination = document.getElementById('pagination');
@@ -282,7 +283,25 @@ function initCatalogCards() {
   });
 
 }
-// 📄 Сторінка car.html
+// Підрахунок кількості авто
+function initTotalCarCount() {
+  const counterElement = document.querySelector('.carts__title');
+
+  if (!counterElement) return;
+
+  fetch('js/cars.json')
+    .then(res => res.json())
+    .then(data => {
+      const allCars = data.carts || [];
+      const availableCars = allCars.filter(car => car.available !== false); // Якщо поле `available` = false — пропускаємо
+      counterElement.textContent = `Всього авто: ${availableCars.length}`;
+    })
+    .catch(err => {
+      console.error("Помилка завантаження JSON для підрахунку авто:", err);
+      counterElement.textContent = "Всього авто: —";
+    });
+}
+// Сторінка car.html
 function initCarPage() {
   const carTitle = document.getElementById("car-title");
   if (!carTitle) return;
@@ -381,7 +400,7 @@ function initCarPage() {
           <p class="car__description">${car.description}</p>
         </div>
         <div class="card__select">
-          <p class="car__price">${car.price}</p>
+          <p class="currcar__price">${car.price}</p>
           <button class="card__btn">
             <a href="car.html?model=${encodeURIComponent(car.slug)}">Обрати</a>
           </button>
@@ -391,7 +410,7 @@ function initCarPage() {
   }
 }
 
-// 🔗 Перехід з кнопки на сторінку каталогу
+// Перехід з кнопки на сторінку каталогу
 function initCatalogRedirect() {
   document.querySelector(".catalog__btn")?.addEventListener("click", () => {
     window.location.href = "catalog.html";

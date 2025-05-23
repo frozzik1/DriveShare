@@ -51,7 +51,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/solaris.png",
       "slug": "hyundai-solaris",
-      "car_class":"Середній"
+      "car_class":"Середній",
+      "available": true
     },
     {
       "title": "Kia Rio",
@@ -60,7 +61,8 @@
       "price": "6 ₴/хв",
       "image": "images/cars/rio.png",
       "slug": "kio-rio",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Volkswagen Polo",
@@ -69,7 +71,8 @@
       "price": "350 ₴/3 год",
       "image": "images/cars/polo.png",
       "slug": "volkswagen-polo",
-      "car_class":"Середній"
+      "car_class":"Середній",
+      "available": true
     },
     {
       "title": "Toyota Corolla",
@@ -78,7 +81,8 @@
       "price": "350 ₴/3 год",
       "image": "images/cars/corolla.png",
       "slug": "toyota-corolla",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Renault Logan",
@@ -87,7 +91,8 @@
       "price": "350 ₴/3 год",
       "image": "images/cars/logan.png",
       "slug": "renault-logan",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Nissan Leaf",
@@ -96,7 +101,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/leaf.png",
       "slug": "nissan-leaf",
-      "car_class":"Бізнес"
+      "car_class":"Бізнес",
+      "available": true
     },
     {
       "title": "Skoda Octavia",
@@ -105,7 +111,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/octavia.png",
       "slug": "skoda-octavia",
-      "car_class":"Середній"
+      "car_class":"Середній",
+      "available": true
     },
     {
       "title": "Chevrolet Spark",
@@ -114,7 +121,8 @@
       "price": "6 ₴/хв",
       "image": "images/cars/spark.png",
       "slug": "chevrolet-spark",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Ford Focus",
@@ -123,7 +131,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/focus.png",
       "slug": "ford-focus",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Hyundai Solaris",
@@ -132,7 +141,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/solaris.png",
       "slug": "hyundai-solaris",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Hyundai Solaris",
@@ -141,7 +151,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/solaris.png",
       "slug": "hyundai-solaris",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Hyundai Solaris",
@@ -150,7 +161,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/solaris.png",
       "slug": "hyundai-solaris",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Hyundai Solaris",
@@ -159,7 +171,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/solaris.png",
       "slug": "hyundai-solaris",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Hyundai Solaris",
@@ -168,7 +181,8 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/solaris.png",
       "slug": "hyundai-solaris",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
     },
     {
       "title": "Hyundai Solaris",
@@ -177,7 +191,18 @@
       "price": "3000 ₴/добу",
       "image": "images/cars/solaris.png",
       "slug": "hyundai-solaris",
-      "car_class":"Економ"
+      "car_class":"Економ",
+      "available": true
+    },
+    {
+      "title": "Hyundai Solaris",
+      "subtitle": "Економний комфорт",
+      "description": "Компактний седан для щоденних поїздок",
+      "price": "3000 ₴/добу",
+      "image": "images/cars/solaris.png",
+      "slug": "hyundai-solaris",
+      "car_class":"Економ",
+      "available": true
     }
   ]
 }
