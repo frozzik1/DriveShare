@@ -92,13 +92,14 @@ $breakpoint_m:480px;
 .header {
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: bottom;
+  background-position: center;
   max-height: 1190px;
   height: 1190px;
   padding-top: 15px;
   position: relative;
   overflow: hidden;
   font-weight: 400;
+  min-height: 60vh;
 }
 
 /* Добавляем слой размытия */
@@ -204,6 +205,15 @@ $breakpoint_m:480px;
   max-width: 540px;
 }
 
+.input-wrapper {
+  position: relative;
+  flex-grow: 1;
+}
+
+.input-wrapper input[type="text"] {
+  box-sizing: border-box;
+}
+
 .autocomplete-list {
   position: absolute;
   background: #008892;
@@ -212,7 +222,12 @@ $breakpoint_m:480px;
   overflow-y: auto;
   list-style: none;
   padding: 0;
-  margin-top: 50px;
+  width: 100%;
+  top: 100%;
+  overflow-y: auto;
+  border-radius: 20px;
+  z-index: 9999;
+  font-family: "Roboto", sans-serif;
 }
 
 .autocomplete-list li {
@@ -324,13 +339,21 @@ $breakpoint_m:480px;
   .header__form-search {
     width: 300px;
   }
+
+  .input-wrapper input[type="text"] {
+    box-sizing: border-box;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .header {
     height: 850px;
+    min-height: 50vh;
   }
-
+  .header::before {
+    background-position: center top;
+  }
   .header__title {
     font-size: 36px;
   }
@@ -370,12 +393,12 @@ $breakpoint_m:480px;
   .nav-wrapper {
     position: fixed;
     background-color: #008892;
-    width: 170px;
+    width: 110px;
     display: none;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 20px 0;
+    justify-content: center;
+    padding: 15px 15px;
     top: 70px;
     right: 15px;
   }
@@ -393,6 +416,7 @@ $breakpoint_m:480px;
   .header__title {
     margin-top: 0px;
   }
+  
 }
 
 @media (max-width: 480px) {
@@ -639,6 +663,9 @@ $breakpoint_m:480px;
   .caring__item-subtitle {
     font-size: 15px;
   }
+  .caring__img {
+    margin-bottom: -30px;
+  }
 }
 
 .tarifs {
@@ -831,6 +858,13 @@ $breakpoint_m:480px;
   .tarifs__tarif-list {
     flex-direction: column;
     gap: 30px;
+  }
+  .tarifs__title{
+    font-size: 34px;
+  }
+  .tarifs__tarif-info{
+    transform: scale(0.9);
+    margin: -25px 0;
   }
 }
 

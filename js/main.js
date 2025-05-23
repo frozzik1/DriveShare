@@ -18,7 +18,6 @@ function initBurgerMenu() {
   document.querySelectorAll(".header__navigation-item a")
     .forEach(link => link.addEventListener("click", () => navWrapper.classList.remove("active")));
 }
-
 // Анімації при скролі
 function initIntersectionAnimations() {
   const observe = (selector, visibleClass = "visible", threshold = 0.3, withDelay = false) => {

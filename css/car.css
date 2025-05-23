@@ -160,6 +160,20 @@ body::-webkit-scrollbar-thumb {
     box-shadow: 0px 0px 17px #008892;
 }
 
+.header button {
+    border: none;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    /* color: white; */
+    /* background-color: #008892; */
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: 0.3s all;
+    border-radius: 25px;
+}
+
 .burger {
     display: none;
     font-size: 32px;
@@ -167,9 +181,8 @@ body::-webkit-scrollbar-thumb {
     border: none;
     color: #008892;
     cursor: pointer;
-    position: absolute;
     right: 0;
-
+    color: white;
 }
 
 .header .burger {
@@ -221,14 +234,19 @@ body::-webkit-scrollbar-thumb {
     .nav-wrapper {
         position: fixed;
         background-color: #008892;
-        width: 170px;
+        width: 110px;
         display: none;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
-        padding: 20px 0;
+        justify-content: center;
+        padding: 15px 15px;
         top: 70px;
         right: 15px;
+    }
+
+    .header__navigation-item {
+        font-size: 15px;
+        color: white;
     }
 
     .nav-wrapper.active {
@@ -240,6 +258,14 @@ body::-webkit-scrollbar-thumb {
         gap: 15px;
         margin: 0;
     }
+
+    .header__container {
+        padding: 0;
+    }
+    .header__navigation {
+        position: fixed;
+    }
+
 }
 
 @media (max-width: 480px) {
@@ -301,7 +327,8 @@ body::-webkit-scrollbar-thumb {
     list-style: disc;
     padding-left: 40px;
 }
-.car__features li{
+
+.car__features li {
     padding-top: 5px;
 }
 
@@ -314,7 +341,8 @@ body::-webkit-scrollbar-thumb {
     list-style: disc;
     padding-left: 40px;
 }
-.rental__cost li{
+
+.rental__cost li {
     padding-top: 5px;
 }
 
@@ -378,7 +406,7 @@ body::-webkit-scrollbar-thumb {
 
 .card__bg {
     max-width: 450px;
-    object-fit:"contain";
+    object-fit: "contain";
 }
 
 .car__advantages,
@@ -421,7 +449,7 @@ body::-webkit-scrollbar-thumb {
     border-radius: 25px;
 }
 
-.card__btn:hover{
+.card__btn:hover {
     box-shadow: 0px 0px 17px #008892;
 }
 
@@ -432,8 +460,70 @@ body::-webkit-scrollbar-thumb {
     justify-content: space-between;
 }
 
-.currcar__price{
+.currcar__price {
     color: #000000;
     font-size: 22px;
     font-family: "Roboto", sans-serif;
+}
+
+@media (max-width: 1200px) {
+    .car__image {
+        width: 400px;
+    }
+
+    .portfolio__cards {
+        gap: 20px;
+    }
+
+    .carts {
+        transform: scale(0.9);
+    }
+
+    .main {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media (max-width: 960px) {
+    .car__title {
+        font-size: 24px;
+    }
+
+    .car__features-title,
+    .car__subtitle,
+    .car__features li,
+    .car__advantages li,
+    .rental__cost-title {
+        font-size: 16px;
+    }
+
+    .car__price {
+        font-size: 20px;
+    }
+
+    .about__car {
+        margin-bottom: -30px;
+    }
+}
+
+@media (max-width: 720px) {
+    .car__container {
+        flex-direction: column;
+    }
+
+    .portfolio__card {
+        gap: 10px;
+        margin: 0;
+    }
+
+    .container {
+        margin: 0;
+    }
+
+    .car__image {
+        width: 300px;
+    }
+
+    
 }

@@ -80,7 +80,7 @@ body::-webkit-scrollbar-thumb {
 .header {
     padding-top: 15px;
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     font-weight: 400;
 }
 
@@ -90,7 +90,7 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     position: relative;
     height: 70px;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .logo__header {
@@ -139,24 +139,40 @@ body::-webkit-scrollbar-thumb {
     margin-bottom: 25px;
 }
 
+.input-wrapper {
+  position: relative;
+  flex-grow: 1;
+}
+.input-wrapper input[type="text"] {
+  box-sizing: border-box;
+  width: 100%;
+}
 .autocomplete-list {
-    position: absolute;
-    background: #008892;
-    z-index: 1000;
-    max-height: 200px;
-    overflow-y: auto;
-    list-style: none;
-    padding: 0;
-    margin-top: 50px;
+  position: absolute;
+  background: #008892;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  top: 100%;
+  overflow-y: auto;
+  border-radius: 20px;
+  z-index: 9999;
+  font-family: "Roboto", sans-serif;
+  
 }
 
 .autocomplete-list li {
     padding: 8px;
+    z-index: 9999;
     cursor: pointer;
 }
 
 .autocomplete-list li:hover {
     background: #ffffff83;
+    z-index: 9999;
 }
 
 .header input {
@@ -299,22 +315,21 @@ body::-webkit-scrollbar-thumb {
     }
 
     .nav-wrapper {
-        position: fixed;
-        background-color: #008892;
-        width: 170px;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 20px 0;
-        top: 70px;
-        right: 15px;
-    }
+    position: fixed;
+    background-color: #008892;
+    width: 110px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 15px;
+    top: 70px;
+    right: 15px;
+  }
     
     .header__navigation-item {
         font-size: 15px;
         color: white;
-
     }
 
     .nav-wrapper.active {
@@ -326,6 +341,7 @@ body::-webkit-scrollbar-thumb {
         gap: 15px;
         margin: 0;
     }
+    
 }
 
 @media (max-width: 480px) {
@@ -351,14 +367,14 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
-
 .carts__title {
     color: #000000;
     font-family: "Roboto", sans-serif;
     font-weight: 800;
     font-size: 32px;
     margin: 30px auto;
-    
+    z-index: 1;
+    /* background-color: #000000; */
 }
 
 .total__cars{
@@ -450,6 +466,7 @@ body::-webkit-scrollbar-thumb {
     cursor: pointer;
     font-weight: bold;
     color: #000000;
+    border-radius: 25px;
 }
 
 .pagination-btn.active {

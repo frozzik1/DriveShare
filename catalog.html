@@ -41,9 +41,11 @@
         <div class="container">
             <div class="header__content">
                 <form class="header__form-search form">
-                    <input type="text" placeholder="Знайти авто">
-                    <button type="submit">Знайти</button>
-                    <ul class="autocomplete-list"></ul>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Знайти авто">
+                        <ul class="autocomplete-list"></ul>
+                    </div>
+                    <button type="submit">Пошук</button>
                 </form>
             </div>
             <div class="custom-select-wrapper">
@@ -60,7 +62,7 @@
     <main class="main">
         <section class="carts" id="carts">
             <div class="container">
-                <h2 class="carts__title">Всього авто<span class="total__cars" id="total-cars">0</span></h2>
+                <h2 class="carts__title">Всього авто доступно<span class="total__cars" id="total-cars">0</span></h2>
                 <div class="portfolio__cards" id="portfolio__card"></div>
                 <div class="pagination" id="pagination"></div>
         </section>
