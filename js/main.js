@@ -115,7 +115,7 @@ function initCatalogCards() {
   const classFilter = document.getElementById("classFilter"); // ← важливо
   if (!container || !pagination || !searchForm || !searchInput || !autocompleteList) return;
 
-  const CARDS_PER_PAGE = 9;
+  const CARDS_PER_PAGE = 8;
   let allCars = [], filteredCars = [], currentPage = 1, currentQuery = '';
   let selectedClass = 'Усі';
 
@@ -336,6 +336,8 @@ function initCarPage() {
         img.alt = carData.title || "";
       }
 
+      const priceEl = document.getElementById("car-price");
+
       // Исправленная функция renderList
       function renderList(id, data) {
         const container = document.getElementById(id);
@@ -380,7 +382,7 @@ function initCarPage() {
     const recommended = allCars
       .filter(car => car.slug !== currentSlug)
       .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
+      .slice(0, 4);
 
     container.innerHTML = '';
 
@@ -395,6 +397,7 @@ function initCarPage() {
           <p class="car__description">${car.description}</p>
         </div>
         <div class="card__select">
+          <p class="currcar__price">${car.price}</p>
           <button class="card__btn">
             <a href="car.html?model=${encodeURIComponent(car.slug)}">Обрати</a>
           </button>

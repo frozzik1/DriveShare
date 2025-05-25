@@ -140,28 +140,30 @@ body::-webkit-scrollbar-thumb {
 }
 
 .input-wrapper {
-  position: relative;
-  flex-grow: 1;
+    position: relative;
+    flex-grow: 1;
 }
+
 .input-wrapper input[type="text"] {
-  box-sizing: border-box;
-  width: 100%;
+    box-sizing: border-box;
+    width: 100%;
 }
+
 .autocomplete-list {
-  position: absolute;
-  background: #008892;
-  z-index: 1000;
-  max-height: 200px;
-  overflow-y: auto;
-  list-style: none;
-  padding: 0;
-  width: 100%;
-  top: 100%;
-  overflow-y: auto;
-  border-radius: 20px;
-  z-index: 9999;
-  font-family: "Roboto", sans-serif;
-  
+    position: absolute;
+    background: #008892;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    top: 100%;
+    overflow-y: auto;
+    border-radius: 20px;
+    z-index: 9999;
+    font-family: "Roboto", sans-serif;
+
 }
 
 .autocomplete-list li {
@@ -199,9 +201,11 @@ body::-webkit-scrollbar-thumb {
     font-size: 16x;
     line-height: 20px;
 }
-.header input::placeholder:hover{
+
+.header input::placeholder:hover {
     color: white;
 }
+
 .header input:hover {
     background: #00889283;
 }
@@ -315,18 +319,18 @@ body::-webkit-scrollbar-thumb {
     }
 
     .nav-wrapper {
-    position: fixed;
-    background-color: #008892;
-    width: 110px;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 15px;
-    top: 70px;
-    right: 15px;
-  }
-    
+        position: fixed;
+        background-color: #008892;
+        width: 110px;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 15px;
+        top: 70px;
+        right: 15px;
+    }
+
     .header__navigation-item {
         font-size: 15px;
         color: white;
@@ -341,7 +345,7 @@ body::-webkit-scrollbar-thumb {
         gap: 15px;
         margin: 0;
     }
-    
+
 }
 
 @media (max-width: 480px) {
@@ -377,33 +381,34 @@ body::-webkit-scrollbar-thumb {
     /* background-color: #000000; */
 }
 
-.total__cars{
+.total__cars {
     color: #008892;
 }
 
 .portfolio__cards {
     margin-top: 26px;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
-    gap: 45px;
+    justify-content: center;
+    gap: 20px;
 }
 
 .portfolio__card {
     padding: 30px;
-    width: 450px;
+    width: 350px;
     border: #008892 1px solid;
     border-radius: 25px;
-    height: 510px;
-    box-shadow: 0px 0px 15px #000000;
+    height: 410px;
+    /* box-shadow: 0 0 40px rgba(0, 0, 0, 0.3); */
 }
 
 .portfolio__card img {
     border-radius: 10px;
     width: 100%;
     object-fit: contain;
-    height: 290px;
+    height: 50%;
 }
 
 .card__bg {
@@ -416,6 +421,10 @@ body::-webkit-scrollbar-thumb {
     color: #767679;
     font-family: "Roboto", sans-serif;
     font-size: 15px;
+}
+
+.car__description {
+    min-height: 36px;
 }
 
 .car__model {
@@ -431,6 +440,7 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .car__price {
@@ -440,7 +450,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .card__btn {
-    width: 120px;
+    width: 160px;
     height: 50px;
     background-color: #008892;
     font-family: "Roboto", sans-serif;
@@ -448,6 +458,7 @@ body::-webkit-scrollbar-thumb {
     font-weight: 300;
     border-radius: 25px;
 }
+
 .card__btn:hover {
     box-shadow: 0px 0px 20px #008892;
     transition: 0.4s all;
@@ -480,17 +491,23 @@ body::-webkit-scrollbar-thumb {
     transition: 0.4s all;
 }
 
-@media (max-width: 1470px) {
+@media (max-width: 1489px) {
     .portfolio__cards {
-        gap: 5px;
+        margin-top: 26px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 20px;
     }
+
 }
 
 @media (max-width: 480px) {
     .portfolio__card {
         padding: 15px;
         max-width: 100%;
-        width: 100%;
         height: 100%;
     }
 
@@ -498,8 +515,4 @@ body::-webkit-scrollbar-thumb {
         margin-top: 15px;
         gap: 15px;
     }
-
-    /* .card__bg {
-        max-width: 300px;
-    } */
 }
