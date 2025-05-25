@@ -316,6 +316,7 @@ body::-webkit-scrollbar-thumb {
     font-family: "Roboto", sans-serif;
     color: #AFADB5;
     margin: 10px auto;
+    max-width: 700px;
 }
 
 .car__features-title {
@@ -360,6 +361,7 @@ body::-webkit-scrollbar-thumb {
     background-position: center;
     transition: 0.3s all;
     border-radius: 25px;
+    margin-top: 25px;
 }
 
 .select__car-btn:hover {

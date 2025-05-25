@@ -72,22 +72,6 @@ body::-webkit-scrollbar-thumb {
 
 /*
 
-$breakpoint_xxl:1200px;
-@include desktop{
-}
-
-$breakpoint_xl:992px;
-@include laptop{
-}
-
-$breakpoint_l:768px;
-@include tablets{
-}
-
-$breakpoint_m:480px;
-@include phones{
-}
-
 */
 .header {
   background-repeat: no-repeat;
@@ -102,7 +86,7 @@ $breakpoint_m:480px;
   min-height: 60vh;
 }
 
-/* Добавляем слой размытия */
+/* Розмиття */
 .header::before {
   content: "";
   position: absolute;

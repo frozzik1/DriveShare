@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initIndexSearch();
   initTotalCarCount();
 });
-
 // Меню-бургер
 function initBurgerMenu() {
   const burger = document.getElementById("burger");
@@ -337,9 +336,6 @@ function initCarPage() {
         img.alt = carData.title || "";
       }
 
-      const priceEl = document.getElementById("car-price");
-      if (priceEl) priceEl.textContent = `${carData.price} ₴/доба`;
-
       // Исправленная функция renderList
       function renderList(id, data) {
         const container = document.getElementById(id);
@@ -399,7 +395,6 @@ function initCarPage() {
           <p class="car__description">${car.description}</p>
         </div>
         <div class="card__select">
-          <p class="currcar__price">${car.price}</p>
           <button class="card__btn">
             <a href="car.html?model=${encodeURIComponent(car.slug)}">Обрати</a>
           </button>
@@ -408,7 +403,6 @@ function initCarPage() {
     });
   }
 }
-
 // Перехід з кнопки на сторінку каталогу
 function initCatalogRedirect() {
   document.querySelector(".catalog__btn")?.addEventListener("click", () => {
