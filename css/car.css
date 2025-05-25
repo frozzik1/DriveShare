@@ -417,6 +417,9 @@ body::-webkit-scrollbar-thumb {
     font-family: "Roboto", sans-serif;
     font-size: 15px;
 }
+.car__description {
+    min-height: 36px;
+}
 
 .car__model {
     font-weight: 500;
