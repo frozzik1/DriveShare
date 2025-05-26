@@ -1,23 +1,28 @@
+// Запуск всіх ініціалізаційніх функцій після завантаження DOM
 document.addEventListener("DOMContentLoaded", () => {
-  initBurgerMenu();
-  initIntersectionAnimations();
-  initCatalogCards();
-  initCarPage();
-  initCatalogRedirect();
-  initIndexSearch();
-  initTotalCarCount();
+  initBurgerMenu();              
+  initIntersectionAnimations();  
+  initCatalogCards();            
+  initCarPage();               
+  initCatalogRedirect();        
+  initIndexSearch();           
+  initTotalCarCount();          
 });
+
 // Меню-бургер
 function initBurgerMenu() {
   const burger = document.getElementById("burger");
   const navWrapper = document.getElementById("nav-wrapper");
   if (!burger || !navWrapper) return;
 
+  // Клік по бургеру — відкриває/закриває меню
   burger.addEventListener("click", () => navWrapper.classList.toggle("active"));
+
+  // Клік по пункту меню — закриває меню
   document.querySelectorAll(".header__navigation-item a")
     .forEach(link => link.addEventListener("click", () => navWrapper.classList.remove("active")));
 }
-// Анімації при скролі
+// Анімації елементів при появі в полі зору
 function initIntersectionAnimations() {
   const observe = (selector, visibleClass = "visible", threshold = 0.3, withDelay = false) => {
     const elements = document.querySelectorAll(selector);
@@ -36,11 +41,13 @@ function initIntersectionAnimations() {
     elements.forEach(el => observer.observe(el));
   };
 
+  // Ініціалізуємо анімації для різних секцій
   observe(".advantages__item");
   observe(".caring__item", "visible", 0.5, true);
   observe(".tarifs__tarif-card");
 }
-// Пошук на index.html
+
+// Пошук на головній сторінці
 function initIndexSearch() {
   const searchForm = document.querySelector('.header__form-search');
   if (!searchForm) return;
@@ -48,9 +55,11 @@ function initIndexSearch() {
   const searchInput = searchForm.querySelector('input[type="text"]');
   const autocompleteList = searchForm.querySelector('.autocomplete-list');
   if (!searchInput || !autocompleteList) return;
+
   const basePath = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/') + '/';
   let allCars = [];
 
+  // Завантаження всіх авто
   fetch('js/cars.json')
     .then(res => res.json())
     .then(data => {
@@ -58,6 +67,7 @@ function initIndexSearch() {
     })
     .catch(err => console.error("Помилка завантаження JSON:", err));
 
+  // Підказка під час введення
   function showAutocomplete(query) {
     autocompleteList.innerHTML = '';
     if (!query) return;
@@ -72,7 +82,6 @@ function initIndexSearch() {
       item.addEventListener('click', () => {
         searchInput.value = car.title;
         autocompleteList.innerHTML = '';
-        // Переходим на каталог с поисковым параметром
         const url = new URL(basePath + 'catalog.html');
         url.searchParams.set('search', car.title.toLowerCase());
         window.location.href = url.toString();
@@ -90,35 +99,36 @@ function initIndexSearch() {
     const query = searchInput.value.trim().toLowerCase();
     if (!query) return;
     const basePath = window.location.pathname.replace(/\/[^\/]*$/, '/');
-    // При сабмите сразу переходим на каталог с поисковым параметром
     const url = new URL(basePath + 'catalog.html');
-  
     url.searchParams.set('search', query);
     window.location.href = url.toString();
   });
 
+  // Закриття списку підказок при кліку поза формою
   document.addEventListener('click', e => {
     if (!searchForm.contains(e.target)) {
       autocompleteList.innerHTML = '';
     }
   });
 }
-// Генерація карток авто (каталог)
+
+// Генерація карток авто в каталозі
 function initCatalogCards() {
   const container = document.getElementById('portfolio__card');
   const pagination = document.getElementById('pagination');
   const basePath = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/') + '/';
-  
+
   const searchForm = document.querySelector('.header__form-search');
   const searchInput = searchForm?.querySelector('input[type="text"]');
   const autocompleteList = searchForm?.querySelector('.autocomplete-list');
-  const classFilter = document.getElementById("classFilter"); // ← важливо
+  const classFilter = document.getElementById("classFilter");
   if (!container || !pagination || !searchForm || !searchInput || !autocompleteList) return;
 
   const CARDS_PER_PAGE = 8;
   let allCars = [], filteredCars = [], currentPage = 1, currentQuery = '';
   let selectedClass = 'Усі';
 
+  // Читання параметрів з URL
   const urlParams = new URLSearchParams(window.location.search);
   currentPage = Math.max(1, parseInt(urlParams.get('page')) || 1);
   currentQuery = urlParams.get('search')?.toLowerCase().trim() || '';
@@ -136,6 +146,7 @@ function initCatalogCards() {
     })
     .catch(err => console.error("Помилка завантаження JSON:", err));
 
+  // Підказки при вводі
   function showAutocomplete(query) {
     autocompleteList.innerHTML = '';
     if (!query) return;
@@ -161,6 +172,7 @@ function initCatalogCards() {
     if (!searchForm.contains(e.target)) autocompleteList.innerHTML = '';
   });
 
+  // Пошук та фільтр класу
   function applySearch(query) {
     let result = allCars;
 
@@ -177,6 +189,7 @@ function initCatalogCards() {
     filteredCars = result;
   }
 
+  // Рендер карток
   function renderPage(page) {
     container.innerHTML = '';
     const start = (page - 1) * CARDS_PER_PAGE;
@@ -208,6 +221,7 @@ function initCatalogCards() {
     });
   }
 
+  // Пагінація
   function renderPagination(activePage) {
     const pageCount = Math.ceil(filteredCars.length / CARDS_PER_PAGE);
     pagination.innerHTML = '';
@@ -227,22 +241,16 @@ function initCatalogCards() {
     }
   }
 
+  // Оновлення URL
   function updateURL() {
     const url = new URL(window.location);
     url.searchParams.set('page', currentPage);
-    if (currentQuery) {
-      url.searchParams.set('search', currentQuery);
-    } else {
-      url.searchParams.delete('search');
-    }
-    if (selectedClass && selectedClass !== 'Усі') {
-      url.searchParams.set('class', selectedClass);
-    } else {
-      url.searchParams.delete('class');
-    }
+    if (currentQuery) url.searchParams.set('search', currentQuery);
+    else url.searchParams.delete('search');
+    if (selectedClass && selectedClass !== 'Усі') url.searchParams.set('class', selectedClass);
+    else url.searchParams.delete('class');
     window.history.pushState({}, '', url);
   }
-
 
   searchForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -266,6 +274,7 @@ function initCatalogCards() {
       updateURL();
     });
   }
+
   window.addEventListener('popstate', () => {
     const urlParams = new URLSearchParams(window.location.search);
     currentPage = Math.max(1, parseInt(urlParams.get('page')) || 1);
@@ -279,19 +288,18 @@ function initCatalogCards() {
     renderPage(currentPage);
     renderPagination(currentPage);
   });
-
 }
-// Підрахунок кількості авто
+
+// Загальна кількості авто
 function initTotalCarCount() {
   const counterElement = document.querySelector('.carts__title');
-
   if (!counterElement) return;
 
   fetch('js/cars.json')
     .then(res => res.json())
     .then(data => {
       const allCars = data.carts || [];
-      const availableCars = allCars.filter(car => car.available !== false); // Якщо поле `available` = false — пропускаємо
+      const availableCars = allCars.filter(car => car.available !== false);
       counterElement.textContent = `Всього авто: ${availableCars.length}`;
     })
     .catch(err => {
@@ -299,7 +307,8 @@ function initTotalCarCount() {
       counterElement.textContent = "Всього авто: —";
     });
 }
-// Сторінка car.html
+
+// Сторінка обраного авто
 function initCarPage() {
   const carTitle = document.getElementById("car-title");
   if (!carTitle) return;
@@ -310,10 +319,7 @@ function initCarPage() {
   fetch("js/cars.json")
     .then(res => res.json())
     .then(data => {
-      // Используем data.data для страницы car.html
       const allCars = data.data || [];
-
-      // Ищем машину по slug (а не по title)
       const carData = allCars.find(car =>
         car.title.toLowerCase().replace(/\s+/g, '-') === model.toLowerCase()
       );
@@ -326,7 +332,6 @@ function initCarPage() {
       document.title = `${carData.title} – DriveShare`;
       carTitle.textContent = carData.title;
 
-      // Добавляем проверку существования элементов
       const subtitleEl = document.getElementById("car-subtitle");
       if (subtitleEl) subtitleEl.textContent = carData.subtitle || "";
 
@@ -338,36 +343,19 @@ function initCarPage() {
 
       const priceEl = document.getElementById("car-price");
 
-      // Исправленная функция renderList
       function renderList(id, data) {
         const container = document.getElementById(id);
-        if (!container || !data) {
-          console.error(`Контейнер ${id} не найден или нет данных`);
-          return;
-        }
+        if (!container || !data) return;
 
         container.innerHTML = Object.entries(data)
           .map(([key, val]) => `<li><strong>${key}:</strong> ${val}</li>`)
           .join('');
       }
 
-      // Добавляем характеристики
-      if (carData.car_features) {
-        renderList("car-features", carData.car_features);
-      } else {
-        console.error("Нет данных car_features");
-      }
+      if (carData.car_features) renderList("car-features", carData.car_features);
+      if (carData.rental_cost) renderList("rental_cost", carData.rental_cost);
 
-      // Добавляем стоимость аренды
-      if (carData.rental_cost) {
-        renderList("rental_cost", carData.rental_cost);
-      } else {
-        console.error("Нет данных rental_cost");
-      }
-
-      // Рекомендованные авто (используем data.carts)
-      const recommendedCars = data.carts || [];
-      renderRecommendedCars(recommendedCars, model.toLowerCase());
+      renderRecommendedCars(data.carts || [], model.toLowerCase());
     })
     .catch(err => {
       console.error("Помилка завантаження car data:", err);
@@ -378,7 +366,6 @@ function initCarPage() {
     const container = document.getElementById('portfolio__card');
     if (!container) return;
 
-    // Фильтруем авто (исключаем текущее)
     const recommended = allCars
       .filter(car => car.slug !== currentSlug)
       .sort(() => 0.5 - Math.random())
@@ -406,10 +393,10 @@ function initCarPage() {
     });
   }
 }
+
 // Перехід з кнопки на сторінку каталогу
 function initCatalogRedirect() {
   document.querySelector(".catalog__btn")?.addEventListener("click", () => {
     window.location.href = "catalog.html";
   });
 }
-
